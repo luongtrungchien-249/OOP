@@ -12,10 +12,13 @@ namespace HW2
         {
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding= Encoding.UTF8;
+            int n;
+            
+            Person[] persons = new Person[];
 
-            // Khởi tạo một mảng Person để lưu thông tin 3 người
-            Person[] persons = new Person[3];
-
+            Console.WriteLine("Nhập Số lượng Person : ");
+            n = Convert.ToInt32(Console.ReadLine());
+            persons = new Person[n];
             // Nhập thông tin cho 3 người
             for (int i = 0; i < persons.Length; i++)
             {
