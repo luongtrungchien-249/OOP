@@ -1,63 +1,86 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HW2
+static void Main(string[] args)
 {
-    internal class Program
+    Console.InputEncoding = Encoding.UTF8;
+    Console.OutputEncoding = Encoding.UTF8;
+
+    Console.WriteLine(" QUẢN LÝ THÔNG TIN PERSON ");
+
+    int n;
+    
+    while (true)
     {
-        static void Main(string[] args)
+        Console.Write("Nhập số lượng Person: ");
+        string input = Console.ReadLine();
+
+        if (int.TryParse(input, out n) && n > 0)
         {
-            Console.InputEncoding = Encoding.UTF8;
-            Console.OutputEncoding= Encoding.UTF8;
-            int n;
-            
-            Person[] persons = new Person[];
-
-            Console.WriteLine("Nhập Số lượng Person : ");
-            n = Convert.ToInt32(Console.ReadLine());
-            persons = new Person[n];
-            // Nhập thông tin cho 3 người
-            for (int i = 0; i < persons.Length; i++)
-            {
-                Console.WriteLine($"Nhập thông tin cho Người {i + 1}");
-                Console.Write("Vui lòng nhập tên: ");
-                string name = Console.ReadLine();
-
-                Console.Write("Vui lòng nhập địa chỉ: ");
-                string address = Console.ReadLine();
-
-                string salary;
-                bool validSalary = false;
-
-                // Kiểm tra và yêu cầu nhập lại lương nếu không hợp lệ
-                while (!validSalary)
-                {
-                    Console.Write("Vui lòng nhập lương: ");
-                    salary = Console.ReadLine();
-
-                    // Nhập thông tin người vào mảng
-                    persons[i] = Person.Nhap(name, address, salary); // Nhập thông tin của người
-                    validSalary = true;  // Nếu lương hợp lệ, thoát khỏi vòng lặp
-                }
-
-                // Hiển thị thông tin sau khi nhập
-                Person.HienThi(persons[i]);
-            }
-
-            // Sắp xếp theo lương
-            persons = Person.sortBySalary(persons);  // Gọi phương thức sortBySalary từ lớp Person
-
-            // Hiển thị thông tin sau khi sắp xếp
-            Console.WriteLine("\nThông tin sau khi sắp xếp theo Lương:");
-            foreach (var person in persons)
-            {
-                Person.HienThi(person);
-            }
-
-            Console.ReadLine();
+            break;
         }
+        Console.WriteLine("Số lượng phải là số nguyên dương! Vui lòng nhập lại.");
     }
+
+    Person[] persons = new Person[n];
+
+    
+    for (int i = 0; i < n; i++)
+    {
+        Console.WriteLine($"\n=== NHẬP THÔNG TIN NGƯỜI THỨ {i + 1}/{n} ===");
+
+        Console.Write("Vui lòng nhập tên: ");
+        string name = Console.ReadLine();
+
+        Console.Write("Vui lòng nhập địa chỉ: ");
+        string address = Console.ReadLine();
+
+        
+        bool validSalary = false;
+        while (!validSalary)
+        {
+            Console.Write("Vui lòng nhập lương: ");
+            string salaryInput = Console.ReadLine();
+
+            try
+            {
+                persons[i] = Person.Nhap(name, address, salaryInput);
+                validSalary = true;
+                Console.WriteLine(" Nhập thành công!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($" {ex.Message}");
+            }
+        }
+
+        
+        Console.WriteLine("\nThông tin vừa nhập:");
+        Person.HienThi(persons[i]);
+    }
+
+    
+    Console.WriteLine("\n" + new string('=', 50));
+    Console.WriteLine("DANH SÁCH TẤT CẢ NGƯỜI");
+    Console.WriteLine(new string('=', 50));
+
+    for (int i = 0; i < persons.Length; i++)
+    {
+        Console.WriteLine($"Người thứ {i + 1}:");
+        Person.HienThi(persons[i]);
+    }
+
+    
+    persons = Person.SortBySalary(persons);
+
+    
+    Console.WriteLine("\n" + new string('=', 50));
+    Console.WriteLine("DANH SÁCH SAU KHI SẮP XẾP THEO LƯƠNG (TĂNG DẦN)");
+    Console.WriteLine(new string('=', 50));
+
+    for (int i = 0; i < persons.Length; i++)
+    {
+        Console.WriteLine($"Thứ hạng {i + 1}:");
+        Person.HienThi(persons[i]);
+    }
+
+    Console.WriteLine("\nNhấn phím bất kỳ để thoát...");
+    Console.ReadKey();
 }
