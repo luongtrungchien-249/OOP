@@ -1,10 +1,28 @@
-﻿internal class Program
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HW5
 {
-    
-    private static void Main(string[] args)
+    internal class Program
     {
-        MyDate md1 = new MyDate(DateTime.Now.Day,DateTime.Now.Month, DateTime.Now.Year);
-        Console.WriteLine("{0}/{1}/{2}",md1.Day,md1.Month,md1.Year);
-        Console.ReadKey();
+        static void Main(string[] args)
+        {
+            try
+            {
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+                Console.InputEncoding = System.Text.Encoding.UTF8;
+
+                Yamaha yamahaSystem = new Yamaha();
+                yamahaSystem.Run();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khởi chạy chương trình: {ex.Message}");
+                Console.WriteLine("Chi tiết lỗi: " + ex.StackTrace);
+            }
+        }
     }
 }
